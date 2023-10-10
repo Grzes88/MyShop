@@ -21,8 +21,8 @@ internal static class Extensions
         services.AddHostedService<DatabaseInitializer>();
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
 
-        services.AddScoped<IProductRepository, MSqlProductRepository>();
-        services.AddScoped<ICategoryRepository, MSqlCategoryRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IUnitOfWork, MSqlUnitOfWork>();
 
         return services;

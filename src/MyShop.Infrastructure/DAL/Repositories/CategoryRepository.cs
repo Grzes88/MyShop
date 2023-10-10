@@ -3,11 +3,11 @@ using MyShop.Core.Repositories;
 
 namespace MyShop.Infrastructure.DAL.Repositories;
 
-internal sealed class MSqlCategoryRepository : ICategoryRepository
+internal sealed class CategoryRepository : ICategoryRepository
 {
     private readonly MyShopDbContext _dbContext;
 
-    public MSqlCategoryRepository(MyShopDbContext dbContext)
+    public CategoryRepository(MyShopDbContext dbContext)
         => _dbContext = dbContext;
 
     public async Task AddCategoryAsync(Category category)
