@@ -9,12 +9,15 @@ public class CategoryController : ControllerBase
 {
     private readonly ICommandHandler<CreateCategory> _createCategoryHandler;
     private readonly ICommandHandler<UpdateCategory> _updateCategoryHandler;
+    private readonly ICommandHandler<DeleteCategory> _deleteCategoryHandler;
 
     public CategoryController(ICommandHandler<CreateCategory> createCategoryHandler,
-        ICommandHandler<UpdateCategory> updateCategoryHandler)
+        ICommandHandler<UpdateCategory> updateCategoryHandler,
+        ICommandHandler<DeleteCategory> deleteCategoryHandler)
     {
         _createCategoryHandler = createCategoryHandler;
         _updateCategoryHandler = updateCategoryHandler;
+        _deleteCategoryHandler = deleteCategoryHandler;
     }
 
     [HttpPost("category")]
@@ -31,4 +34,10 @@ public class CategoryController : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete("category/{categoryId:guid}")]
+    public async Task<IActionResult> DeleteCategory(Guid categoryId)
+    {
+        await _deleteCategoryHandler.HandleAsync(new DeleteCategory(categoryId));
+        return NoContent();
+    }
 }

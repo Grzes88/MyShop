@@ -7,4 +7,5 @@ public interface ICategoryRepository
 {
     Task AddCategoryAsync(Category category);
     Task<Category?> GetCategoryAsync(CategoryId id);
+    void DeleteCategory(Category? category);
 }

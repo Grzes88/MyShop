@@ -9,14 +9,17 @@ internal sealed class ProductRepository : IProductRepository
 {
     private readonly MyShopDbContext _dbContext;
 
-    public ProductRepository(MyShopDbContext dbContext) 
+    public ProductRepository(MyShopDbContext dbContext)
         => _dbContext = dbContext;
 
     public async Task AddProductAsync(Product product)
         => await _dbContext.Products.AddAsync(product);
 
-    public async Task<Product?> GetProductAsync(ProductId id) 
+    public void DeleteProduct(Product? product)
+        => _dbContext.Products.Remove(product);
+
+    public async Task<Product?> GetProductAsync(ProductId id)
         => await _dbContext.Products
             .Include(p => p.Category)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(p => p.Id == id);
 }
