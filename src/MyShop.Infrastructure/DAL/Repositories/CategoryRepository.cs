@@ -1,5 +1,7 @@
-﻿using MyShop.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MyShop.Core.Entities;
 using MyShop.Core.Repositories;
+using MyShop.Core.ValueObjects;
 
 namespace MyShop.Infrastructure.DAL.Repositories;
 
@@ -13,4 +15,8 @@ internal sealed class CategoryRepository : ICategoryRepository
     public async Task AddCategoryAsync(Category category)
         => await _dbContext.Categories.AddAsync(category);
 
+    public async Task<Category?> GetCategoryAsync(CategoryId id) 
+        => await _dbContext.Categories
+        .Include(c => c.Products)
+        .FirstOrDefaultAsync(x => x.Id == id);
 }
