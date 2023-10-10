@@ -28,4 +28,12 @@ public class Product
 
     public static Product Create(Name name, Description description, Price price, CategoryId categoryId) 
         => new(Guid.NewGuid(), name, description, price, categoryId);
+
+    public void Update(Name name, Description description, Price price, CategoryId categoryId)
+    {
+        Name = name;
+        Description = description;
+        Price = price;
+        CategoryId = categoryId;
+    }
 }

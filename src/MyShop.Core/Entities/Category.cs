@@ -22,4 +22,7 @@ public class Category
 
     public static Category Create(Name name) 
         => new(Guid.NewGuid(), name);
+
+    public void Update(Name name) 
+        => Name = name;
 }

@@ -8,13 +8,32 @@ Content-Type: application/json
 "name": "Pasek do spodni",
 "description": "czysta skóra",
 "price": 11.99,
-"categoryId": ""
+"categoryId": "E9E846D8-D80C-4BE0-9209-FF4E257B7618"
 } 
+
+### update product
+PUT {{api}}/product/9E49DC22-BE85-4240-8448-3CF891DD82F9
+Content-Type: application/json
+
+{
+"name": "Pasek do spodni",
+"description": "czysta skóra (PROMOCJA)",
+"price": 7.99,
+"categoryId": "E9E846D8-D80C-4BE0-9209-FF4E257B7618"
+}
 
 ### add category
 Post {{api}}/category
 Content-Type: application/json
 
 {
-"name": "Ubrania",
+"name": "Ubrania"
 } 
+
+### update category
+PUT {{api}}/category/9E49DC22-BE85-4240-8448-3CF891DD82F9
+Content-Type: application/json
+
+{
+"name": "Akcesoria",
+}
