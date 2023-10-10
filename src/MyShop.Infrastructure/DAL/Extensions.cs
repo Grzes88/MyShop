@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyShop.Application.Abstractions;
+using MyShop.Core.Repositories;
 using MyShop.Infrastructure.DAL.Decorators;
+using MyShop.Infrastructure.DAL.Repositories;
 
 namespace MyShop.Infrastructure.DAL;
 
@@ -17,8 +19,11 @@ internal static class Extensions
         services.AddDbContext<MyShopDbContext>(x => x.UseSqlServer(mSqlOptions.ConnectionString));
 
         services.AddHostedService<DatabaseInitializer>();
-
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
+
+        services.AddScoped<IProductRepository, MSqlProductRepository>();
+        services.AddScoped<ICategoryRepository, MSqlCategoryRepository>();
+        services.AddScoped<IUnitOfWork, MSqlUnitOfWork>();
 
         return services;
     }

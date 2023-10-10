@@ -19,4 +19,7 @@ public class Category
         Id = id;
         Name = name;
     }
+
+    public static Category Create(Name name) 
+        => new(Guid.NewGuid(), name);
 }

@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace MyShop.Infrastructure.DAL;
 
-namespace MyShop.Infrastructure.DAL;
-
-internal sealed class MSqlUnitOfWork
+internal sealed class MSqlUnitOfWork : IUnitOfWork
 {
     private readonly MyShopDbContext _myShopDbContext;
 
