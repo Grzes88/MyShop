@@ -22,4 +22,9 @@ internal sealed class ProductRepository : IProductRepository
         => await _dbContext.Products
             .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Id == id);
+
+    public async Task<IEnumerable<Product?>> GetProductsAsync()
+        => await _dbContext.Products
+            .Include(p => p.Category)
+            .ToListAsync();
 }
