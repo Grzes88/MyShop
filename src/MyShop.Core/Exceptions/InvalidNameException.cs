@@ -2,7 +2,8 @@
 
 public sealed class InvalidNameException : CustomException
 {
-    public InvalidNameException() : base($"Product name is invalid")
-    {
-    }
+    public string Name { get; }
+
+    public InvalidNameException(string name) : base($"name: '{name}' is invalid.") 
+        => Name = name;
 }

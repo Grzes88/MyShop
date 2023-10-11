@@ -8,7 +8,7 @@ public sealed record Description
 
     public Description(string value)
     {
-        if(string.IsNullOrEmpty(value))
+        if(string.IsNullOrEmpty(value) || value.Length is > 1000 or < 3)
             throw new InvalidDescriptionException(value);
 
         Value = value;
