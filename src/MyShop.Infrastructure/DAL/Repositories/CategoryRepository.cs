@@ -18,8 +18,11 @@ internal sealed class CategoryRepository : ICategoryRepository
     public void DeleteCategory(Category? category)
         => _dbContext.Categories.Remove(category);
 
-    public async Task<Category?> GetCategoryAsync(CategoryId id) 
+    public async Task<IEnumerable<Category?>> GetCategoriesAsync()
         => await _dbContext.Categories
-        .Include(c => c.Products)
-        .FirstOrDefaultAsync(c => c.Id == id);
+            .ToListAsync();
+
+    public async Task<Category?> GetCategoryAsync(CategoryId id)
+        => await _dbContext.Categories
+            .FirstOrDefaultAsync(c => c.Id == id);
 }

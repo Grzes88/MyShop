@@ -1,0 +1,26 @@
+@api = http://localhost:5073
+
+### add category
+Post {{api}}/category
+Content-Type: application/json
+
+{
+"name": "LUMPEX"
+} 
+
+### update category
+PUT {{api}}/category/e2fc8644-e579-4b76-bf77-632ffc8d9d95
+Content-Type: application/json
+
+{
+"name": "Lumpaa"
+}
+
+### get categories
+GET {{api}}/categories
+Content-Type: application/json
+
+
+### delete category
+DELETE {{api}}/category/ED50B055-DC8B-446C-9B25-35B0D26B8235
+Content-Type: application/json
