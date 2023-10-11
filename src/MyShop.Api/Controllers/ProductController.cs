@@ -3,7 +3,6 @@ using MyShop.Application.Abstractions;
 using MyShop.Application.Commands;
 using MyShop.Application.DTO;
 using MyShop.Application.Queries;
-using MyShop.Infrastructure.DAL.Handlers;
 
 namespace MyShop.Api.Controllers;
 

@@ -8,7 +8,7 @@ public sealed record Price()
 
     public Price(double value) : this()
     {
-        if (value < 0)
+        if (value < 0 || double.IsInfinity(value))
             throw new InvalidPriceException(value);
 
         Value = value;

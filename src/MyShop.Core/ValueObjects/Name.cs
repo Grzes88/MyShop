@@ -2,13 +2,23 @@
 
 namespace MyShop.Core.ValueObjects;
 
-public sealed record Name(string Value)
+public sealed record Name
 {
-    public string Value { get; } = Value ?? throw new InvalidNameException();
+    public string Value { get; }
 
-    public static implicit operator string(Name name) 
-        => name.Value;
+    public Name(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || value.Length is > 100 or < 3)
+            throw new InvalidNameException(value);
 
-    public static implicit operator Name(string value) 
-        => new(value);
+        Value = value;
+    }
+
+    public static implicit operator string(Name name)
+    => name.Value;
+
+public static implicit operator Name(string value)
+    => new(value);
+
+    public override string ToString() => Value;
 }
