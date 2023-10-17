@@ -5,7 +5,7 @@ Post {{api}}/category
 Content-Type: application/json
 
 {
-"name": "LUMPEX"
+"name": "Motot"
 } 
 
 ### update category
