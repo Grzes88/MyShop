@@ -8,4 +8,5 @@ public interface IProductService
     Task CreateProductAsync(CreateProductDto createProductDto);
     Task<ProductDto?> GetProductAsync(Guid id);
     Task DeleteProductAsync(Guid id);
+    Task UpdateProductAsync(Guid id, UpdateProductDto updateProductDto);
 }

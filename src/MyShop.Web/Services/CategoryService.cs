@@ -24,4 +24,6 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto?> GetCategoryAsync(Guid id) 
         => await _httpClient.GetFromJsonAsync<CategoryDto?>($"category/{id}");
+    public async Task UpdateCategoryAsync(Guid id, UpdateCategoryDto updateCategoryDto)
+        => await _httpClient.PutAsJsonAsync($"category/{id}", updateCategoryDto);
 }
