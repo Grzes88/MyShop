@@ -33,6 +33,11 @@ public static class Extensions
             });
         });
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+        });
+
         var infrastructureAssembly = typeof(AppOptions).Assembly;
 
         services.Scan(s => s.FromAssemblies(infrastructureAssembly)
@@ -55,6 +60,7 @@ public static class Extensions
         });
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseCors("Open");
         app.MapControllers();
 
         return app;

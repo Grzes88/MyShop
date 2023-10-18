@@ -13,16 +13,19 @@ public class ProductController : ControllerBase
     private readonly ICommandHandler<UpdateProduct> _updateProductHandler;
     private readonly ICommandHandler<DeleteProduct> _deleteProductHandler;
     private readonly IQueryHandler<GetProducts, IEnumerable<ProductDto>> _getProductsHandler;
+    private readonly IQueryHandler<GetProduct, ProductDto> _getProductHandler;
 
     public ProductController(ICommandHandler<CreateProduct> createProductHandler,
         ICommandHandler<UpdateProduct> updateProductHandler,
         ICommandHandler<DeleteProduct> deleteProductHandler,
-        IQueryHandler<GetProducts, IEnumerable<ProductDto>> getProductsHandler)
+        IQueryHandler<GetProducts, IEnumerable<ProductDto>> getProductsHandler,
+        IQueryHandler<GetProduct, ProductDto> getProductHandler)
     {
         _createProductHandler = createProductHandler;
         _updateProductHandler = updateProductHandler;
         _deleteProductHandler = deleteProductHandler;
         _getProductsHandler = getProductsHandler;
+        _getProductHandler = getProductHandler;
     }
 
     [HttpPost("Product")]
@@ -49,4 +52,8 @@ public class ProductController : ControllerBase
     [HttpGet("products")]
     public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts([FromQuery] GetProducts queries) 
         => Ok(await _getProductsHandler.HandleAsync(queries));
+
+    [HttpGet("product/{productId:guid}")]
+    public async Task<ActionResult<CategoryDto>> GetProduct(Guid productId)
+        => Ok(await _getProductHandler.HandleAsync(new GetProduct(productId)));
 }

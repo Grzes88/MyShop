@@ -1,7 +1,6 @@
 using MyShop.Infrastructure;
 using MyShop.Application;
 using Serilog;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

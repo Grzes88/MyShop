@@ -13,16 +13,19 @@ public class CategoryController : ControllerBase
     private readonly ICommandHandler<UpdateCategory> _updateCategoryHandler;
     private readonly ICommandHandler<DeleteCategory> _deleteCategoryHandler;
     private readonly IQueryHandler<GetCategories, IEnumerable<CategoryDto>> _getCategoriesHandler;
+    private readonly IQueryHandler<GetCategory, CategoryDto> _getCategoryHandler;
 
     public CategoryController(ICommandHandler<CreateCategory> createCategoryHandler,
         ICommandHandler<UpdateCategory> updateCategoryHandler,
         ICommandHandler<DeleteCategory> deleteCategoryHandler,
-        IQueryHandler<GetCategories, IEnumerable<CategoryDto>> getCategoriesHandler)
+        IQueryHandler<GetCategories, IEnumerable<CategoryDto>> getCategoriesHandler,
+        IQueryHandler<GetCategory, CategoryDto> getCategoryHandler)
     {
         _createCategoryHandler = createCategoryHandler;
         _updateCategoryHandler = updateCategoryHandler;
         _deleteCategoryHandler = deleteCategoryHandler;
         _getCategoriesHandler = getCategoriesHandler;
+        _getCategoryHandler = getCategoryHandler;
     }
 
     [HttpPost("category")]
@@ -49,4 +52,8 @@ public class CategoryController : ControllerBase
     [HttpGet("categories")]
     public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories([FromQuery] GetCategories queries)
         => Ok(await _getCategoriesHandler.HandleAsync(queries));
+
+    [HttpGet("category/{categoryId:guid}")]
+    public async Task<ActionResult<CategoryDto>> GetCategory(Guid categoryId)
+        => Ok(await _getCategoryHandler.HandleAsync(new GetCategory(categoryId)));
 }
