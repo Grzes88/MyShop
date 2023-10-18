@@ -21,4 +21,7 @@ public sealed class ProductService : IProductService
 
     public async Task<ProductDto?> GetProductAsync(Guid id)
         => await _httpClient.GetFromJsonAsync<ProductDto>($"product/{id}");
+
+    public async Task UpdateProductAsync(Guid id, UpdateProductDto updateProductDto)
+     => await _httpClient.PutAsJsonAsync($"product/{id}", updateProductDto);
 }

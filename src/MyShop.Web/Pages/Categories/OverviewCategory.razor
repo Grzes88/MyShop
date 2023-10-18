@@ -32,7 +32,6 @@ else
                         <MudButton Variant="Variant.Text">Przejdz dalej...</MudButton>
 
                         <MudCardActions>
-                            <MudIconButton Icon="@Icons.Material.Filled.Add" Label="add" Color="Color.Info" @onclick="@(() => {NavigationManager.NavigateTo($"/createcategory/{item.Id}");})"></MudIconButton>
                             <MudIconButton Icon="@Icons.Material.Filled.Edit" Label="Edit" Color="Color.Tertiary" @onclick="@(() => {NavigationManager.NavigateTo($"/updatecategory/{item.Id}");})"></MudIconButton>
                             <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" Color="Color.Error" @onclick="@(() => {DeleteCategoryAsync(item.Id);})"></MudIcon>
                         </MudCardActions>
@@ -43,5 +42,5 @@ else
     </MudContainer>
 }
 <div Class="btn btn-Primary table-primary quick-add-btn">
-    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDialog" />
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="@(() => {NavigationManager.NavigateTo($"/createcategory");})" />
 </div>
