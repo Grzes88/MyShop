@@ -1,21 +1,20 @@
-﻿using MyShop.Application.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using MyShop.Application.Abstractions;
 using MyShop.Application.DTO;
 using MyShop.Application.Queries;
-using MyShop.Core.Repositories;
 
 namespace MyShop.Infrastructure.DAL.Handlers;
 
 public sealed class GetProductsHandler : IQueryHandler<GetProducts, IEnumerable<ProductDto>>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly MyShopDbContext _dbContext;
 
-    public GetProductsHandler(IProductRepository productRepository)
-        => _productRepository = productRepository;
+    public GetProductsHandler(MyShopDbContext dbContext) 
+        => _dbContext = dbContext;
 
-    public async Task<IEnumerable<ProductDto>> HandleAsync(GetProducts query)
-    {
-        var products = await _productRepository.GetProductsAsync();
-
-        return products.Select(p => new ProductDto(p.Id, p.Name, p.Description, p.Price, p.CategoryId));
-    }
+    public async Task<IEnumerable<ProductDto>> HandleAsync(GetProducts query) 
+        => await _dbContext.Products
+            .AsNoTracking()
+            .Select(Extensions.AsProductDto())
+            .ToListAsync();
 }

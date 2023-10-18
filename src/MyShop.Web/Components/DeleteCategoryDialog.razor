@@ -1,0 +1,35 @@
+﻿@using MyShop.Web.DTO;
+@using MyShop.Web.Services;
+
+@inject ICategoryService CategoryService
+
+<MudDialog>
+    <DialogContent>
+        Are you sure to delete this Category?
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="ConfirmDeleteAsync">Delete Category</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Guid CategoryId { get; set; }
+    public CategoryDto CategoryDto { get; set; } = new CategoryDto();
+
+    private async Task ConfirmDeleteAsync()
+    {
+        await CategoryService.DeleteCategoryAsync(CategoryId);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+        StateHasChanged();
+    }
+}

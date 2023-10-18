@@ -24,5 +24,6 @@ internal sealed class CategoryRepository : ICategoryRepository
 
     public async Task<Category?> GetCategoryAsync(CategoryId id)
         => await _dbContext.Categories
+            .Include(x => x.Products)
             .FirstOrDefaultAsync(c => c.Id == id);
 }
