@@ -5,10 +5,10 @@ Post {{api}}/product
 Content-Type: application/json
 
 {
-"name": "Pasasa",
-"description": "czysta",
-"price": 1,
-"categoryId": "E9E846D8-D80C-4BE0-9209-FF4E257B7618"
+"name": "Pasek do garnituru",
+"description": "czysta skóra",
+"price": 11.99,
+"categoryId": "a9df4678-1881-4728-82b3-141186c668b3"
 } 
 
 ### update product
@@ -18,15 +18,7 @@ Content-Type: application/json
 {
 "name": "Pasek do spodni",
 "description": "czysta skóra (PROMOCJA)",
-"price": 7.91,
+"price": 7.99,
 "categoryId": "E9E846D8-D80C-4BE0-9209-FF4E257B7618"
 }
-
-### get products
-GET {{api}}/products
-Content-Type: application/json
-
-### delete product
-DELETE {{api}}/product/80be6fdb-221b-436d-ba5c-9738ad0f2620
-Content-Type: application/json
 

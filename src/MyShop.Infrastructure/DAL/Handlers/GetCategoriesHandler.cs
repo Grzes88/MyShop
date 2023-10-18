@@ -1,21 +1,20 @@
-﻿using MyShop.Application.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using MyShop.Application.Abstractions;
 using MyShop.Application.DTO;
 using MyShop.Application.Queries;
-using MyShop.Core.Repositories;
 
 namespace MyShop.Infrastructure.DAL.Handlers;
 
 public sealed class GetCategoriesHandler : IQueryHandler<GetCategories, IEnumerable<CategoryDto>>
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly MyShopDbContext _dbContext;
 
-    public GetCategoriesHandler(ICategoryRepository categoryRepository) 
-        => _categoryRepository = categoryRepository;
+    public GetCategoriesHandler(MyShopDbContext dbContext) 
+        => _dbContext = dbContext;
 
-    public async Task<IEnumerable<CategoryDto>> HandleAsync(GetCategories query)
-    {
-        var categories = await _categoryRepository.GetCategoriesAsync();
-
-        return categories.Select(c => new CategoryDto(c.Id, c.Name));
-    }
+    public async Task<IEnumerable<CategoryDto>> HandleAsync(GetCategories query) 
+        => await _dbContext.Categories
+            .AsNoTracking()
+            .Select(Extensions.AsCategoryDto())
+            .ToListAsync();
 }
