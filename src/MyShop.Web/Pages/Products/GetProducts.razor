@@ -21,12 +21,15 @@ else
             {
                 <MudCard Width="250px" Class="mr-2">
                     <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudAvatar Color="Color.Primary"></MudAvatar>
+                        </CardHeaderAvatar>
                         <CardHeaderContent>
-                            <MudText Color="Color.Dark">@item.Category.Name</MudText>
+                            <MudText  Color="Color.Dark">@item.Category.Name</MudText>
                         </CardHeaderContent>
 
                         <CardHeaderContent>
-                            <MudText Typo="Typo.body1">@item.Name</MudText>
+                            <MudText Typo="Typo.h6">@item.Name</MudText>
                             <MudText Typo="Typo.body2">@item.Price</MudText>
                         </CardHeaderContent>
                     </MudCardHeader>
@@ -51,7 +54,7 @@ else
     public IEnumerable<ProductDto> ProductDtos { get; set; }
 
     protected override async Task OnInitializedAsync()
-        => ProductDtos = (await ProductService.GetProductsAsync()).ToList();
+        => ProductDtos = await ProductService.GetProductsAsync();
 
     private async Task DeleteProductAsync(Guid id)
     {

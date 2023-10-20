@@ -3,12 +3,14 @@
 @using MyShop.Web.DTO;
 @using MyShop.Web.Services;
 
+@inject ISnackbar Snackbar
 @inject IProductService ProductService
 @inject ICategoryService CategoryService
 @inject NavigationManager NavigationManager
+@inject HttpResponseMessage HttpResponseMessage
 
 <div class="d-flex justify-content-center mt-6">
-    <MudChip Color="Color.Primary"><h3>Dodanie produktu</h3></MudChip>
+    <MudChip Color="Color.Primary"><h3>Add product</h3></MudChip>
 </div>
 
 <div class="d-flex justify-content-center mt-6">
@@ -44,7 +46,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        CategoryDtos = (await CategoryService.GetCategoriesAsync()).ToList();
+        CategoryDtos = await CategoryService.GetCategoriesAsync();
 
         CategoryDto = ProductDto.Category;
     }
@@ -54,7 +56,19 @@
         var createProductDto = new CreateProductDto(
             ProductDto.Name, ProductDto.Description, ProductDto.Price, CategoryDto.Id);
 
-        await ProductService.CreateProductAsync(createProductDto);
+        var responseMessage = await ProductService.CreateProductAsync(createProductDto);
+
+        if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+            Snackbar.Add("Product has been added", Severity.Success);
+
+        else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+        {
+            var readString = await responseMessage.Content.ReadAsStringAsync(); 
+            Snackbar.Add($"{readString}", Severity.Error);
+        }
+
+        else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+            Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
 
         NavigationManager.NavigateTo("/getproducts/home");
     }

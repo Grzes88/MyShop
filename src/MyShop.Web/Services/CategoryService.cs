@@ -10,11 +10,8 @@ public class CategoryService : ICategoryService
     public CategoryService(HttpClient httpClient) 
         => _httpClient = httpClient;
 
-    public async Task<bool> CreateCategoryAsync(CreateCategoryDto createCategoryDto)
-    {
-        var response = await _httpClient.PostAsJsonAsync("category", createCategoryDto);
-        return response.IsSuccessStatusCode;
-    }
+    public async Task<HttpResponseMessage> CreateCategoryAsync(CreateCategoryDto createCategoryDto) 
+        => await _httpClient.PostAsJsonAsync("category", createCategoryDto);
 
     public async Task DeleteCategoryAsync(Guid id)
         => await _httpClient.DeleteAsync($"category/{id}");

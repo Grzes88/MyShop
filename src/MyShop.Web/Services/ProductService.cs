@@ -10,7 +10,7 @@ public sealed class ProductService : IProductService
     public ProductService(HttpClient httpClient)
         => _httpClient = httpClient;
 
-    public async Task CreateProductAsync(CreateProductDto createProductDto)
+    public async Task<HttpResponseMessage> CreateProductAsync(CreateProductDto createProductDto) 
         => await _httpClient.PostAsJsonAsync("product", createProductDto);
 
     public async Task DeleteProductAsync(Guid id)

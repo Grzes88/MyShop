@@ -14,6 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 builder.Services.AddHttpClient<ICategoryService, CategoryService>(ConfigureClient);
 builder.Services.AddHttpClient<IProductService, ProductService>(ConfigureClient);
+builder.Services.AddScoped<HttpResponseMessage>();
 
 await builder.Build().RunAsync();
 

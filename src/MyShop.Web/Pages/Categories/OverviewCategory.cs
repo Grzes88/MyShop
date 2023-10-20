@@ -13,24 +13,10 @@ public partial class OverviewCategory
     [Inject]
     public IDialogService DialogService { get; set; }
 
-    protected CreateCategoryDialog CreateCategoryDialog { get; set; }
     public IEnumerable<CategoryDto> CategoryDtos { get; set; }
 
     protected override async Task OnInitializedAsync()
-        => CategoryDtos = (await CategoryService.GetCategoriesAsync()).ToList();
-
-    private async Task OpenDialog()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        var dialog = DialogService.Show<CreateCategoryDialog>("Dodanie Kategorii:", options);
-
-        var result = await dialog.Result;
-        if (!result.Cancelled)
-        {
-            CategoryDtos = (await CategoryService.GetCategoriesAsync()).ToList();
-            StateHasChanged();
-        }
-    }
+        => CategoryDtos = await CategoryService.GetCategoriesAsync();
 
     private async Task DeleteCategoryAsync(Guid id)
     {

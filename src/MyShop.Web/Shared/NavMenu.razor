@@ -1,28 +1,9 @@
-﻿<div class="bg-light" id="sidebar-wrapper">
+﻿<MudPaper Width="250px" Class="d-inline-flex py-3" Elevation="0">
+    <MudNavMenu Class="mud-width-full">
 
-    <div class="sidebar-logo">
-        @*        <img class="img-responsive" id="logo" src="images/bethanylogo.png" />*@
-    </div>
+        <MudText Typo="Typo.h6" Class="px-4">So much inspiration!</MudText>
+        <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+        <MudNavLink Href="/overviewcategory" Icon="@Icons.Material.Filled.ViewList">Categories</MudNavLink>
 
-    <div class="profile">
-        <div class="profile-bg">
-            <img class="img-responsive" src="images/profilePicture.jpg" />
-        </div>
-
-        <div class="profile-picture">
-            @*        <img class="img-responsive circle account-photo" src="images/profilePicture.jpg" />*@
-        </div>
-    </div>
-
-    <div class="menu list-group list-group-flush">
-        <MudPaper Width="250px" Class="d-inline-flex py-3" Elevation="0">
-            <MudNavMenu Class="mud-width-full">
-
-                <MudText Typo="Typo.h6" Class="px-4">So much inspiration!</MudText>
-                <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-                <MudNavLink Href="/overviewcategory" Icon="@Icons.Material.Filled.ViewList">Categories</MudNavLink>
-
-            </MudNavMenu>
-        </MudPaper>
-    </div>
-</div>
+    </MudNavMenu>
+</MudPaper>
