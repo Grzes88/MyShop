@@ -59,16 +59,18 @@
         var responseMessage = await ProductService.CreateProductAsync(createProductDto);
 
         if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+        {
             Snackbar.Add("Product has been added", Severity.Success);
-
+        }
         else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
         {
             var readString = await responseMessage.Content.ReadAsStringAsync(); 
             Snackbar.Add($"{readString}", Severity.Error);
         }
-
         else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+        {
             Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
+        }
 
         NavigationManager.NavigateTo("/getproducts/home");
     }

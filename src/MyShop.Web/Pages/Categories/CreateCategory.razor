@@ -35,16 +35,18 @@
         var responseMessage = await CategoryService.CreateCategoryAsync(createCategoryDto);
 
         if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+        {
             Snackbar.Add("Category has been added", Severity.Success);
-
+        }
         else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
         {
             var readString = await responseMessage.Content.ReadAsStringAsync();
             Snackbar.Add($"{readString}", Severity.Error);
         }
-
         else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+        {
             Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
+        }
 
         NavigationManager.NavigateTo("/overviewcategory");
     }
