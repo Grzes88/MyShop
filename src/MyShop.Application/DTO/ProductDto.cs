@@ -2,18 +2,10 @@
 
 public class ProductDto
 {
-    public Guid Id { get; }
-    public string Name { get; }
-    public string Description { get; }
-    public double Price { get; }
-    public Guid CategoryId { get; }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public double Price { get; set; }
 
-    public ProductDto(Guid id, string name, string description, double price, Guid categoryId)
-    {
-        Id = id;
-        Name = name;
-        Description = description;
-        Price = price;
-        CategoryId = categoryId;
-    }
+    public Guid CategoryId { get; set; }
 }

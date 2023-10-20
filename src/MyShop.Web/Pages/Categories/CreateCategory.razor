@@ -1,0 +1,53 @@
+﻿@page "/createcategory"
+
+@using MyShop.Web.DTO;
+@using MyShop.Web.Services;
+
+@inject ISnackbar Snackbar
+@inject ICategoryService CategoryService
+@inject NavigationManager NavigationManager
+@inject HttpResponseMessage HttpResponseMessage
+
+<div class="d-flex justify-content-center mt-6">
+    <MudChip Color="Color.Secondary"><h3>Add Category</h3></MudChip>
+</div>
+
+<div class="d-flex justify-content-center mt-6">
+    <EditForm Model="@CategoryDto" OnSubmit="CreateCategoryAsync">
+        <MudCard Class="d-flex justify-content-center" Width="500px">
+            <MudCardContent>
+                <MudTextField Label="Name"
+                              @bind-Value="CategoryDto.Name" For="@(() => CategoryDto.Name)" />
+
+                <MudButton Class="mt-2" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Secondary">Add</MudButton>
+            </MudCardContent>
+        </MudCard>
+    </EditForm>
+</div>
+
+@code {
+    public CategoryDto CategoryDto = new CategoryDto();
+
+    private async Task CreateCategoryAsync()
+    {
+        var createCategoryDto = new CreateCategoryDto(CategoryDto.Name);
+
+        var responseMessage = await CategoryService.CreateCategoryAsync(createCategoryDto);
+
+        if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+        {
+            Snackbar.Add("Category has been added", Severity.Success);
+        }
+        else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+        {
+            var readString = await responseMessage.Content.ReadAsStringAsync();
+            Snackbar.Add($"{readString}", Severity.Error);
+        }
+        else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+        {
+            Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
+        }
+
+        NavigationManager.NavigateTo("/overviewcategory");
+    }
+}

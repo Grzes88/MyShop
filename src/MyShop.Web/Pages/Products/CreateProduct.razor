@@ -1,0 +1,77 @@
+﻿@page "/createproduct"
+
+@using MyShop.Web.DTO;
+@using MyShop.Web.Services;
+
+@inject ISnackbar Snackbar
+@inject IProductService ProductService
+@inject ICategoryService CategoryService
+@inject NavigationManager NavigationManager
+@inject HttpResponseMessage HttpResponseMessage
+
+<div class="d-flex justify-content-center mt-6">
+    <MudChip Color="Color.Primary"><h3>Add product</h3></MudChip>
+</div>
+
+<div class="d-flex justify-content-center mt-6">
+    <EditForm Model="@ProductDto" OnSubmit="CreateProductAsync">
+        <MudCard Class="d-flex justify-content-center" Width="500px">
+            <MudCardContent>
+                <MudTextField Label="Name"
+                              @bind-Value="ProductDto.Name" For="@(() => ProductDto.Name)" />
+
+                <MudTextField Label="Price"
+                              @bind-Value="ProductDto.Price" For="@(() => ProductDto.Price)" />
+
+                <MudTextField Label="Description"
+                              @bind-Value="ProductDto.Description" For="@(() => ProductDto.Description)" />
+
+                <MudSelect T="CategoryDto" Label="Category" ToStringFunc="(categoryDto) => categoryDto.Name" @bind-Value="CategoryDto">
+                    @foreach (var categoryDto in CategoryDtos)
+                    {
+                        <MudSelectItem T="CategoryDto" Value="categoryDto">@categoryDto.Name</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudButton Class="mt-2" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary">Add</MudButton>
+            </MudCardContent>
+        </MudCard>
+    </EditForm>
+</div>
+
+@code {
+    protected CategoryDto CategoryDto;
+    public ProductDto ProductDto = new ProductDto();
+    public IEnumerable<CategoryDto> CategoryDtos = new List<CategoryDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CategoryDtos = await CategoryService.GetCategoriesAsync();
+
+        CategoryDto = ProductDto.Category;
+    }
+
+    private async Task CreateProductAsync()
+    {
+        var createProductDto = new CreateProductDto(
+            ProductDto.Name, ProductDto.Description, ProductDto.Price, CategoryDto.Id);
+
+        var responseMessage = await ProductService.CreateProductAsync(createProductDto);
+
+        if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+        {
+            Snackbar.Add("Product has been added", Severity.Success);
+        }
+        else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+        {
+            var readString = await responseMessage.Content.ReadAsStringAsync(); 
+            Snackbar.Add($"{readString}", Severity.Error);
+        }
+        else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+        {
+            Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
+        }
+
+        NavigationManager.NavigateTo("/getproducts/home");
+    }
+}

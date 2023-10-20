@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop.Core", "src\MyShop.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop.Infrastructure", "src\MyShop.Infrastructure\MyShop.Infrastructure.csproj", "{9A3CE042-E8CC-4617-BCE4-A49D39B2BCDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShop.Web", "src\MyShop.Web\MyShop.Web.csproj", "{3CA1ADD9-1FB4-47AB-8CE7-191F2817450D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop.Web", "src\MyShop.Web\MyShop.Web.csproj", "{3CA1ADD9-1FB4-47AB-8CE7-191F2817450D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

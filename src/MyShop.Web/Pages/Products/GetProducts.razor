@@ -1,0 +1,72 @@
+﻿@page "/getproducts/home"
+
+@using MyShop.Web.Components;
+@using MyShop.Web.DTO;
+@using MyShop.Web.Services;
+
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+
+
+@if (ProductDtos is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer Class="d-flex ma-8">
+        <div class="d-flex">
+            @foreach (var item in ProductDtos)
+            {
+                <MudCard Width="250px" Class="mr-2">
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudAvatar Color="Color.Primary"></MudAvatar>
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText  Color="Color.Dark">@item.Category.Name</MudText>
+                        </CardHeaderContent>
+
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@item.Name</MudText>
+                            <MudText Typo="Typo.body2">@item.Price</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">@item.Description</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Label="Edit" Color="Color.Tertiary" @onclick="@(() => {NavigationManager.NavigateTo($"/updateproduct/{item.Id}");})"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Label="Delete" Color="Color.Primary" @onclick="@(() => {DeleteProductAsync(item.Id);})"></MudIconButton>
+                    </MudCardActions>
+                </MudCard>
+            }
+        </div>
+    </MudContainer>
+}
+<div class="btn btn-Primary table-primary quick-add-btn">
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="@(() => {NavigationManager.NavigateTo($"/createproduct");})" />
+</div>
+
+@code {
+    public IEnumerable<ProductDto> ProductDtos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+        => ProductDtos = await ProductService.GetProductsAsync();
+
+    private async Task DeleteProductAsync(Guid id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("ProductId", id);
+        var dialog = await DialogService.ShowAsync<DeleteProductDialog>($"Delete Product", parameters);
+
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            ProductDtos = ProductDtos.Where(x => x.Id != id).ToList();
+            StateHasChanged();
+        }
+    }
+}

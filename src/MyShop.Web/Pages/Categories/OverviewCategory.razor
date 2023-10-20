@@ -1,0 +1,40 @@
+﻿@page "/overviewcategory"
+
+@inject NavigationManager NavigationManager
+
+@if (CategoryDtos is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer Class="d-flex ma-8">
+        <div class="d-flex flex-wrap justify-center">
+            @foreach (var item in CategoryDtos)
+            {
+                <MudCard width="250px;" Class="ma-2">
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudAvatar Color="Color.Secondary"></MudAvatar>
+                        </CardHeaderAvatar>
+
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6" Color="Color.Dark">@item.Name</MudText>
+                            <MudText Typo="Typo.body2">Pyszne i proste!</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+
+                    <MudCardContent Class="justify-center ma-2">
+                        <MudCardActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Label="Edit" Color="Color.Tertiary" @onclick="@(() => {NavigationManager.NavigateTo($"/updatecategory/{item.Id}");})"></MudIconButton>
+                            <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" Color="Color.Secondary" @onclick="@(() => {DeleteCategoryAsync(item.Id);})"></MudIcon>
+                        </MudCardActions>
+                    </MudCardContent>
+                </MudCard>
+            }
+        </div>
+    </MudContainer>
+}
+<div Class="btn btn-Primary table-primary quick-add-btn">
+    <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Add" @onclick="@(() => {NavigationManager.NavigateTo($"/createcategory");})" />
+</div>
