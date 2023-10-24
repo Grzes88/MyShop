@@ -53,19 +53,16 @@
 
     private async Task CreateProductAsync()
     {
-        var createProductDto = new CreateProductDto(
-            ProductDto.Name, ProductDto.Description, ProductDto.Price, CategoryDto.Id);
-
+        var createProductDto = new CreateProductDto(ProductDto.Name, ProductDto.Description, ProductDto.Price, CategoryDto.Id);
         var responseMessage = await ProductService.CreateProductAsync(createProductDto);
-
         if (responseMessage.StatusCode == HttpStatusCode.NoContent)
         {
             Snackbar.Add("Product has been added", Severity.Success);
         }
         else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
         {
-            var readString = await responseMessage.Content.ReadAsStringAsync(); 
-            Snackbar.Add($"{readString}", Severity.Error);
+            var responseDto = await responseMessage.Content.ReadFromJsonAsync<ResponseDto>(); 
+            Snackbar.Add($"{responseDto.Reason}", Severity.Error);
         }
         else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
         {

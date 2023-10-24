@@ -7,9 +7,9 @@ public class Product
     public ProductId Id { get; }
     public Name Name { get; private set; }
     public Description Description { get; private set; }
-    public Price Price { get; set; }
+    public Price Price { get; private set; }
 
-    public CategoryId CategoryId { get; set; }
+    public CategoryId CategoryId { get; private set; }
     public Category Category { get; private set; }
 
     private Product()

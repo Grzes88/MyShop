@@ -12,13 +12,25 @@ Content-Type: application/json
 } 
 
 ### update product
-PUT {{api}}/product/9E49DC22-BE85-4240-8448-3CF891DD82F9
+PUT {{api}}/product/6D8CE2DE-7E64-4279-813F-2F6851206038
 Content-Type: application/json
 
 {
-"name": "Pasek do spodni",
-"description": "czysta skóra (PROMOCJA)",
-"price": 7.99,
-"categoryId": "E9E846D8-D80C-4BE0-9209-FF4E257B7618"
+"name": "spodnie",
+"description": "PROMOCJA",
+"price": 80.99,
+"categoryId": "736C7D1E-A369-4E6B-8710-6BD3885E41CF"
 }
+
+### get products
+GET {{api}}/products
+Content-Type: application/json
+
+### get product Id
+GET {{api}}/product/6d8ce2de-7e64-4279-813f-2f6851206038
+Content-Type: application/json
+
+### delete product
+DELETE {{api}}/product/ED50B055-DC8B-446C-9B25-35B0D26B8235
+Content-Type: application/json
 

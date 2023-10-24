@@ -1,6 +1,7 @@
 ﻿@using MyShop.Web.DTO;
 @using MyShop.Web.Services;
 
+@inject ISnackbar Snackbar
 @inject IProductService ProductService
 
 <MudDialog>
@@ -19,11 +20,23 @@
 
     [Parameter]
     public Guid ProductId { get; set; }
-    public ProductDto ProductDto { get; set; } = new ProductDto();
 
     private async Task ConfirmDeleteAsync()
     {
-        await ProductService.DeleteProductAsync(ProductId);
+        var responseMessage = await ProductService.DeleteProductAsync(ProductId);
+        if(responseMessage.StatusCode == HttpStatusCode.NoContent)
+        {
+            Snackbar.Add("Product has been deleted", Severity.Success);
+        }
+        else if(responseMessage.StatusCode == HttpStatusCode.BadRequest)
+        {
+            var responseDto = await responseMessage.Content.ReadFromJsonAsync<ResponseDto>();
+            Snackbar.Add($"{responseDto.Reason}", Severity.Error);
+        } 
+        else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+        {
+            Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
+        }
         MudDialog.Close(DialogResult.Ok(true));
     }
 

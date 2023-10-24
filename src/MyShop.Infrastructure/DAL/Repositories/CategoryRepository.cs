@@ -2,6 +2,7 @@
 using MyShop.Core.Entities;
 using MyShop.Core.Repositories;
 using MyShop.Core.ValueObjects;
+using System.Linq.Expressions;
 
 namespace MyShop.Infrastructure.DAL.Repositories;
 
@@ -19,11 +20,9 @@ internal sealed class CategoryRepository : ICategoryRepository
         => _dbContext.Categories.Remove(category);
 
     public async Task<IEnumerable<Category?>> GetCategoriesAsync()
-        => await _dbContext.Categories
-            .ToListAsync();
+        => await _dbContext.Categories.ToListAsync();
 
-    public async Task<Category?> GetCategoryAsync(CategoryId id)
+    public async Task<Category?> GetCategoryAsync(CategoryId id) 
         => await _dbContext.Categories
-            .Include(x => x.Products)
             .FirstOrDefaultAsync(c => c.Id == id);
 }

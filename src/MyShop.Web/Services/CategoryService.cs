@@ -13,7 +13,7 @@ public class CategoryService : ICategoryService
     public async Task<HttpResponseMessage> CreateCategoryAsync(CreateCategoryDto createCategoryDto) 
         => await _httpClient.PostAsJsonAsync("category", createCategoryDto);
 
-    public async Task DeleteCategoryAsync(Guid id)
+    public async Task<HttpResponseMessage> DeleteCategoryAsync(Guid id)
         => await _httpClient.DeleteAsync($"category/{id}");
 
     public async Task<IEnumerable<CategoryDto>?> GetCategoriesAsync() 
@@ -21,4 +21,7 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto?> GetCategoryAsync(Guid id) 
         => await _httpClient.GetFromJsonAsync<CategoryDto?>($"category/{id}");
+
+    public async Task<HttpResponseMessage> UpdateCategoryAsync(Guid id, UpdateCategoryDto updateCategoryDto)
+        => await _httpClient.PutAsJsonAsync($"category/{id}", updateCategoryDto);
 }

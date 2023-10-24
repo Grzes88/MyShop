@@ -16,11 +16,8 @@ public sealed class UpdateCategoryHandler : ICommandHandler<UpdateCategory>
     {
         var categoryId = new CategoryId(command.CategoryId);
         var category = await _categoryRepository.GetCategoryAsync(categoryId);
-
         if (category is null) 
-        {
             throw new NotFoundProductException(categoryId);
-        }
 
         category.Update(command.Name);
     }

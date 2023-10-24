@@ -2,8 +2,8 @@
 
 public sealed class InvalidPriceException : CustomException
 {
-    public double Price { get; }
+    public decimal Price { get; }
 
-    public InvalidPriceException(double price) : base($"Price: {price} is invalid") 
+    public InvalidPriceException(decimal price) : base($"Price: {price} is invalid") 
         => Price = price;
 }

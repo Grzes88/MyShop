@@ -1,6 +1,7 @@
 ﻿@using MyShop.Web.DTO;
 @using MyShop.Web.Services;
 
+@inject ISnackbar Snackbar
 @inject ICategoryService CategoryService
 
 <MudDialog>
@@ -19,11 +20,23 @@
 
     [Parameter]
     public Guid CategoryId { get; set; }
-    public CategoryDto CategoryDto { get; set; } = new CategoryDto();
 
     private async Task ConfirmDeleteAsync()
     {
-        await CategoryService.DeleteCategoryAsync(CategoryId);
+        var responseMessage = await CategoryService.DeleteCategoryAsync(CategoryId);
+        if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+        {
+            Snackbar.Add("Category has been deleted", Severity.Success);
+        }
+        else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+        {
+            var responseDto = await responseMessage.Content.ReadFromJsonAsync<ResponseDto>();
+            Snackbar.Add($"{responseDto.Reason}", Severity.Error);
+        }
+        else if (responseMessage.StatusCode == HttpStatusCode.InternalServerError)
+        {
+            Snackbar.Add("Internal server error. Please try again later.", Severity.Warning);
+        }
         MudDialog.Close(DialogResult.Ok(true));
     }
 
