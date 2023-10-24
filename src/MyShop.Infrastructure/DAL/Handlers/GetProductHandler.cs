@@ -18,8 +18,6 @@ public sealed class GetProductHandler : IQueryHandler<GetProduct, ProductDto>
     {
         var productId = new ProductId(query.ProductId);
         var product = await _dbContext.Products
-            .AsNoTracking()
-            .Include(x => x.Category)
             .Select(Extensions.AsProductDto())
             .SingleOrDefaultAsync(p => p.Id == productId.Value);
 

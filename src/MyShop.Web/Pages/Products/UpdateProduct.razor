@@ -16,22 +16,15 @@
     <EditForm Model="@ProductDto" OnSubmit="UpdateProductAsync">
         <MudCard Class="d-flex justify-content-center" Width="500px">
             <MudCardContent>
-                <MudTextField Label="Name"
-                              @bind-Value="ProductDto.Name" For="@(() => ProductDto.Name)" />
-
-                <MudTextField Label="Price"
-                              @bind-Value="ProductDto.Price" For="@(() => ProductDto.Price)" />
-
-                <MudTextField Label="Description"
-                              @bind-Value="ProductDto.Description" For="@(() => ProductDto.Description)" />
-
+                <MudTextField Label="Name" @bind-Value="ProductDto.Name" For="@(() => ProductDto.Name)" />
+                <MudTextField Label="Price" @bind-Value="ProductDto.Price" For="@(() => ProductDto.Price)" />
+                <MudTextField Label="Description" @bind-Value="ProductDto.Description" For="@(() => ProductDto.Description)" />
                 <MudSelect T="CategoryDto" Label="Category" ToStringFunc="(categoryDto) => categoryDto.Name" @bind-Value="SelectedCategory">
                     @foreach (var categoryDto in CategoryDtos)
                     {
                         <MudSelectItem T="CategoryDto" Value="categoryDto">@categoryDto.Name</MudSelectItem>
                     }
                 </MudSelect>
-
                 <MudButton Class="mt-2" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary">Add</MudButton>
             </MudCardContent>
         </MudCard>

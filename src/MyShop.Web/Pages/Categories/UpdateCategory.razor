@@ -16,11 +16,8 @@
     <EditForm Model="@CategoryDto" OnSubmit="UpdateCategoryAsync">
         <MudCard Class="d-flex justify-content-center" Width="500px">
             <MudCardContent>
-
-                <MudTextField Label="Name"
-                              @bind-Value="CategoryDto.Name" For="@(() => CategoryDto.Name)" />
+                <MudTextField Label="Name" @bind-Value="CategoryDto.Name" For="@(() => CategoryDto.Name)" />
                 <MudButton Class="mt-2" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Secondary">Add</MudButton>
-
             </MudCardContent>
         </MudCard>
     </EditForm>
