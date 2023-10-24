@@ -11,19 +11,19 @@ public static class Extensions
         return c => new CategoryDto
         {
             Id = c.Id,
-            Name = c.Name,
+            Name = c.Name
         };
-    }  
+    } 
     
     public static Expression<Func<Product, ProductDto>> AsProductDto()
     {
-        return c => new ProductDto
+        return p => new ProductDto
         {
-            Id = c.Id,
-            Name = c.Name,
-            Price = c.Price,
-            Description = c.Description,
-            CategoryId = c.CategoryId,
+            Id = p.Id,
+            Name = p.Name,
+            Price = p.Price,
+            Description = p.Description,
+            Category = new CategoryDto { Id = p.Id, Name = p.Name }
         };
     }
 }

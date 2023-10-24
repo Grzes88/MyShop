@@ -1,4 +1,4 @@
-﻿@page "/createcategory"
+﻿@page "/updatecategory/{categoryid:guid}"
 
 @using MyShop.Web.DTO;
 @using MyShop.Web.Services;
@@ -9,32 +9,40 @@
 @inject HttpResponseMessage HttpResponseMessage
 
 <div class="d-flex justify-content-center mt-6">
-    <MudChip Color="Color.Secondary"><h3>Add Category</h3></MudChip>
+    <MudChip Color="Color.Primary"><h3>Update Category</h3></MudChip>
 </div>
 
 <div class="d-flex justify-content-center mt-6">
-    <EditForm Model="@CategoryDto" OnSubmit="CreateCategoryAsync">
+    <EditForm Model="@CategoryDto" OnSubmit="UpdateCategoryAsync">
         <MudCard Class="d-flex justify-content-center" Width="500px">
             <MudCardContent>
+
                 <MudTextField Label="Name"
                               @bind-Value="CategoryDto.Name" For="@(() => CategoryDto.Name)" />
-
                 <MudButton Class="mt-2" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Secondary">Add</MudButton>
+
             </MudCardContent>
         </MudCard>
     </EditForm>
 </div>
 
 @code {
-    public CategoryDto CategoryDto = new CategoryDto();
+    [Parameter]
+    public Guid CategoryId { get; set; }
 
-    private async Task CreateCategoryAsync()
+    public CategoryDto CategoryDto { get; set; } = new CategoryDto();
+    public IEnumerable<CategoryDto> CategoryDtos { get; set; } = new List<CategoryDto>();
+
+    protected override async Task OnInitializedAsync()
+        => CategoryDto = await CategoryService.GetCategoryAsync(CategoryId);
+
+    private async Task UpdateCategoryAsync()
     {
-        var createCategoryDto = new CreateCategoryDto(CategoryDto.Name);
-        var responseMessage = await CategoryService.CreateCategoryAsync(createCategoryDto);
+        var updateCategoryDto = new UpdateCategoryDto(CategoryDto.Name);
+        var responseMessage = await CategoryService.UpdateCategoryAsync(CategoryId, updateCategoryDto);
         if (responseMessage.StatusCode == HttpStatusCode.NoContent)
         {
-            Snackbar.Add("Category has been added", Severity.Success);
+            Snackbar.Add("Category has been updated", Severity.Success);
         }
         else if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
         {

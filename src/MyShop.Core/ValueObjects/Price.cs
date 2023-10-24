@@ -4,19 +4,19 @@ namespace MyShop.Core.ValueObjects;
 
 public sealed record Price()
 {
-    public double Value { get; }
+    public decimal Value { get; }
 
-    public Price(double value) : this()
+    public Price(decimal value) : this()
     {
-        if (value < 0 || double.IsInfinity(value))
+        if (value <= decimal.Zero)
             throw new InvalidPriceException(value);
 
         Value = value;
     }
 
-    public static implicit operator Price(double value)
+    public static implicit operator Price(decimal value)
         => new(value);
 
-    public static implicit operator double(Price price)
+    public static implicit operator decimal(Price price)
         => price.Value;
 }

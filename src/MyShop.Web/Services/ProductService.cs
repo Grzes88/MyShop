@@ -13,7 +13,7 @@ public sealed class ProductService : IProductService
     public async Task<HttpResponseMessage> CreateProductAsync(CreateProductDto createProductDto) 
         => await _httpClient.PostAsJsonAsync("product", createProductDto);
 
-    public async Task DeleteProductAsync(Guid id)
+    public async Task<HttpResponseMessage> DeleteProductAsync(Guid id)
         => await _httpClient.DeleteAsync($"product/{id}");
 
     public async Task<IEnumerable<ProductDto>?> GetProductsAsync()
@@ -21,4 +21,7 @@ public sealed class ProductService : IProductService
 
     public async Task<ProductDto?> GetProductAsync(Guid id)
         => await _httpClient.GetFromJsonAsync<ProductDto>($"product/{id}");
+
+    public async Task<HttpResponseMessage> UpdateProductAsync(Guid id, UpdateProductDto updateProductDto)
+     => await _httpClient.PutAsJsonAsync($"product/{id}", updateProductDto);
 }

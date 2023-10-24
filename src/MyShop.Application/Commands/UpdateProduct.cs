@@ -2,5 +2,5 @@
 
 namespace MyShop.Application.Commands;
 
-public sealed record UpdateProduct(Guid ProductId, string Name, string Description, double Price, Guid CategoryId) : ICommand;
+public sealed record UpdateProduct(Guid ProductId, string Name, string Description, decimal Price, Guid CategoryId) : ICommand;
 

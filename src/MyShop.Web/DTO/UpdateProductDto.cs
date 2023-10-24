@@ -1,14 +1,14 @@
 ﻿namespace MyShop.Web.DTO;
 
-public class CreateProductDto
+public class UpdateProductDto
 {
-    public string Name { get; }
-    public string Description { get; }
+    public string? Name { get; }
+    public string? Description { get; }
     public decimal Price { get; }
 
     public Guid CategoryId { get; }
 
-    public CreateProductDto(string name, string description, decimal price, Guid categoryId)
+    public UpdateProductDto(string name, string description, decimal price, Guid categoryId)
     {
         Name = name;
         Description = description;

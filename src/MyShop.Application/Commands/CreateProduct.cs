@@ -2,4 +2,4 @@
 
 namespace MyShop.Application.Commands;
 
-public sealed record CreateProduct(string Name, string Description, double Price, Guid CategoryId) : ICommand;
+public sealed record CreateProduct(string Name, string Description, decimal Price, Guid CategoryId) : ICommand;
