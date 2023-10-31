@@ -19,3 +19,7 @@ var app = builder.Build();
 app.UseInfrastructure();
 app.MapGet("api", (IOptions<AppOptions> options) => Results.Ok(options.Value.Name));
 app.Run();
+
+public partial class Program
+{
+}

@@ -2,7 +2,6 @@
 using MyShop.Core.Entities;
 using MyShop.Core.Repositories;
 using MyShop.Core.ValueObjects;
-using System.Linq.Expressions;
 
 namespace MyShop.Infrastructure.DAL.Repositories;
 
