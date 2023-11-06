@@ -18,8 +18,10 @@ public class CategoryControllerTests : ControllerTests, IDisposable
     [Fact]
     public async Task Post_Category_Should_Return_NoContent_204_Status_Code()
     {
-        //Act
+        //Assert
         var command = new CreateCategory("Buty");
+
+        //Act
         var response = await HttpClient.PostAsJsonAsync("category", command);
 
         //Arrange

@@ -1,6 +1,7 @@
 ﻿namespace MyShop.Infrastructure.DAL;
 
-public sealed class MSqlOptions
+
+internal sealed class MSqlOptions
 {
     public string ConnectionString { get; set; }
 }
