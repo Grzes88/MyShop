@@ -16,7 +16,7 @@ public class ProductControllerTests : ControllerTests, IDisposable
         => _testDatabase = new TestDatabase();
 
     [Fact]
-    public async Task Post_Product_Should_Return_NoContent_204_Status_Code()
+    public async Task Create_Product_Should_Return_NoContent_204_Status_Code()
     {
         //Assert
         var category = new Category(Guid.NewGuid(), "Skóra");
@@ -36,15 +36,11 @@ public class ProductControllerTests : ControllerTests, IDisposable
     public async Task Update_Product_Should_Return_NoContent_204_Status_Code()
     {
         //Assert
-        var category = new Category(Guid.NewGuid(), "Skóra");
-        await _testDatabase.DbContext.Categories.AddAsync(category);
-        await _testDatabase.DbContext.SaveChangesAsync();
-
-        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, category.Id);
+        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, new Category(Guid.NewGuid(), "Skóra"));
         await _testDatabase.DbContext.Products.AddAsync(product);
         await _testDatabase.DbContext.SaveChangesAsync();
 
-        var command = new UpdateProduct(product.Id, "Buty skórzane", "to dobry produkt", 300, category.Id);
+        var command = new UpdateProduct(product.Id, "Buty skórzane", "to dobry produkt", 300, product.CategoryId);
 
         //Act
         var response = await HttpClient.PutAsJsonAsync($"product/{command.ProductId}", command);
@@ -57,11 +53,7 @@ public class ProductControllerTests : ControllerTests, IDisposable
     public async Task Get_Product_Should_Return_Ok_200_Status_Code_And_Product()
     {
         //Assert
-        var category = new Category(Guid.NewGuid(), "Skóra");
-        await _testDatabase.DbContext.Categories.AddAsync(category);
-        await _testDatabase.DbContext.SaveChangesAsync();
-
-        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, category.Id);
+        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, new Category(Guid.NewGuid(), "Skóra"));
         await _testDatabase.DbContext.Products.AddAsync(product);
         await _testDatabase.DbContext.SaveChangesAsync();
 
@@ -77,11 +69,7 @@ public class ProductControllerTests : ControllerTests, IDisposable
     public async Task Get_Products_Should_Return_Ok_200_Status_Code_And_Products()
     {
         //Assert
-        var category = new Category(Guid.NewGuid(), "Skóra");
-        await _testDatabase.DbContext.Categories.AddAsync(category);
-        await _testDatabase.DbContext.SaveChangesAsync();
-
-        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, category.Id);
+        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, new Category(Guid.NewGuid(), "Skóra"));
         await _testDatabase.DbContext.Products.AddAsync(product);
         await _testDatabase.DbContext.SaveChangesAsync();
 
@@ -90,18 +78,14 @@ public class ProductControllerTests : ControllerTests, IDisposable
 
         //Arrange
         ProductsDto.ShouldNotBeNull();
-        ProductsDto.Select(x => x.Id == category.Id.Value).ToList();
+        ProductsDto.Select(x => x.Id == product.CategoryId.Value).ToList();
     }
 
     [Fact]
     public async Task Delete_Product_Should_Return_NoContent_204_Status_Code()
     {
         //Assert
-        var category = new Category(Guid.NewGuid(), "spodnie");
-        await _testDatabase.DbContext.Categories.AddAsync(category);
-        await _testDatabase.DbContext.SaveChangesAsync();
-
-        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, category.Id);
+        var product = new Product(Guid.NewGuid(), "Kurtka skórzana", "to dobry produkt", 101, new Category(Guid.NewGuid(), "spodnie"));
         await _testDatabase.DbContext.Products.AddAsync(product);
         await _testDatabase.DbContext.SaveChangesAsync();
 
