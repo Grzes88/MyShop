@@ -16,6 +16,16 @@ public class Product
     {
     }
 
+    public Product(ProductId id, Name name, Description description,
+        Price price, Category category)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Price = price;
+        Category = category;
+    }
+
     public Product(ProductId id, Name name,
         Description description, Price price, CategoryId categoryId)
     {
@@ -26,7 +36,7 @@ public class Product
         Price = price;
     }
 
-    public static Product Create(Name name, Description description, Price price, CategoryId categoryId) 
+    public static Product Create(Name name, Description description, Price price, CategoryId categoryId)
         => new(Guid.NewGuid(), name, description, price, categoryId);
 
     public void Update(Name name, Description description, Price price, CategoryId categoryId)

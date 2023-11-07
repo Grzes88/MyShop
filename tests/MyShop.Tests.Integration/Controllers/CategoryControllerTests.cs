@@ -16,7 +16,7 @@ public class CategoryControllerTests : ControllerTests, IDisposable
         => _testDatabase = new TestDatabase();
 
     [Fact]
-    public async Task Post_Category_Should_Return_NoContent_204_Status_Code()
+    public async Task Create_Category_Should_Return_NoContent_204_Status_Code()
     {
         //Assert
         var command = new CreateCategory("Buty");
