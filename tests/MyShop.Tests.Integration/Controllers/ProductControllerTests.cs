@@ -74,7 +74,7 @@ public class ProductControllerTests : ControllerTests, IDisposable
         await _testDatabase.DbContext.SaveChangesAsync();
 
         //Act
-        var ProductsDto = await HttpClient.GetFromJsonAsync<List<ProductDto>>("categories");
+        var ProductsDto = await HttpClient.GetFromJsonAsync<List<ProductDto>>("products");
 
         //Arrange
         ProductsDto.ShouldNotBeNull();

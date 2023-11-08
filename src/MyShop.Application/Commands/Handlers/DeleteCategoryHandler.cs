@@ -16,11 +16,8 @@ public sealed class DeleteCategoryHandler : ICommandHandler<DeleteCategory>
     {
         var categoryId = new CategoryId(command.CategoryId);
         var category = await _categoryRepository.GetCategoryAsync(categoryId);
-
         if (category is null)
-        {
             throw new NotFoundCategoryException(categoryId);
-        }
 
         _categoryRepository.DeleteCategory(category);
     }
