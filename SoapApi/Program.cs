@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 
-app.UseSoapEndpoint<ICategoryService>("/Service.asmx", new SoapEncoderOptions());
+app.UseSoapEndpoint<ICategoryService>("/CategoryService", new SoapEncoderOptions());
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
