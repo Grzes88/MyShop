@@ -6,6 +6,7 @@ using MyShop.Application.Abstractions;
 using MyShop.Infrastructure.DAL;
 using MyShop.Infrastructure.Exceptions;
 using MyShop.Infrastructure.Logging;
+using static SoapApi.CategoryServiceContract;
 
 namespace MyShop.Infrastructure;
 
@@ -17,7 +18,7 @@ public static class Extensions
         services.Configure<AppOptions>(configuration.GetRequiredSection("app"));
         services.AddSingleton<ExceptionMiddleware>();
         services.AddHttpContextAccessor();
-
+        services.AddScoped<ICategoryService, CategoryService>();
         services
             .AddMSql(configuration);
 

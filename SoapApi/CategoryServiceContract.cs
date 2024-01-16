@@ -8,12 +8,12 @@ public class CategoryServiceContract
     public interface ICategoryService
     {
         [OperationContract]
-        Task<IEnumerable<Category>> GetAllCategoryAsync();
+        Task<IEnumerable<CategoryDto>> GetAllCategoryAsync();
     }
 
     public class CategoryService : ICategoryService
     {
-        public async Task<IEnumerable<Category>> GetAllCategoryAsync()
+        public async Task<IEnumerable<CategoryDto>> GetAllCategoryAsync()
         {
             var categories = new List<Category>
             {
@@ -23,7 +23,9 @@ public class CategoryServiceContract
                 new Category(4, "ryby")
             };
 
-            return categories.Select(x => new Category(x.Id, x.Name));
+            var categoryDtos = categories.Select(x => new CategoryDto(x.Id, x.Name));
+
+            return categoryDtos;
         }
     }
 }

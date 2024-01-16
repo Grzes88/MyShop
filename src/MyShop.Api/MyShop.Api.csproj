@@ -15,6 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\SoapApi\SoapApi.csproj" />
 		<ProjectReference Include="..\MyShop.Infrastructure\MyShop.Infrastructure.csproj" />
 	</ItemGroup>
 

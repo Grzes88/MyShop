@@ -3,6 +3,7 @@ using MyShop.Application.Abstractions;
 using MyShop.Application.Commands;
 using MyShop.Application.DTO;
 using MyShop.Application.Queries;
+using static SoapApi.CategoryServiceContract;
 
 namespace MyShop.Api.Controllers;
 
@@ -12,20 +13,20 @@ public class CategoryController : ControllerBase
     private readonly ICommandHandler<CreateCategory> _createCategoryHandler;
     private readonly ICommandHandler<UpdateCategory> _updateCategoryHandler;
     private readonly ICommandHandler<DeleteCategory> _deleteCategoryHandler;
-    private readonly IQueryHandler<GetCategories, IEnumerable<CategoryDto>> _getCategoriesHandler;
     private readonly IQueryHandler<GetCategory, CategoryDto> _getCategoryHandler;
+    private readonly ICategoryService _categoryService;
 
     public CategoryController(ICommandHandler<CreateCategory> createCategoryHandler,
         ICommandHandler<UpdateCategory> updateCategoryHandler,
         ICommandHandler<DeleteCategory> deleteCategoryHandler,
         IQueryHandler<GetCategories, IEnumerable<CategoryDto>> getCategoriesHandler,
-        IQueryHandler<GetCategory, CategoryDto> getCategoryHandler)
+        IQueryHandler<GetCategory, CategoryDto> getCategoryHandler, ICategoryService categoryService)
     {
         _createCategoryHandler = createCategoryHandler;
         _updateCategoryHandler = updateCategoryHandler;
         _deleteCategoryHandler = deleteCategoryHandler;
-        _getCategoriesHandler = getCategoriesHandler;
         _getCategoryHandler = getCategoryHandler;
+        _categoryService = categoryService;
     }
 
     [HttpPost("category")]
@@ -50,8 +51,8 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet("categories")]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories([FromQuery] GetCategories queries)
-        => Ok(await _getCategoriesHandler.HandleAsync(queries));
+    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories( )
+    => Ok(await _categoryService.GetAllCategoryAsync());
 
     [HttpGet("category/{categoryId:guid}")]
     public async Task<ActionResult<CategoryDto>> GetCategory(Guid categoryId)
