@@ -5,6 +5,7 @@ using MyShop.Application.Abstractions;
 using MyShop.Core.Repositories;
 using MyShop.Infrastructure.DAL.Decorators;
 using MyShop.Infrastructure.DAL.Repositories;
+using SoapService.CategoryService;
 
 namespace MyShop.Infrastructure.DAL;
 
@@ -24,6 +25,7 @@ internal static class Extensions
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IUnitOfWork, MSqlUnitOfWork>();
+        services.AddScoped<ICategoryService, CategoryServiceClient>();
 
         return services;
     }

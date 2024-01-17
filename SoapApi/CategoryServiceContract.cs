@@ -8,24 +8,22 @@ public class CategoryServiceContract
     public interface ICategoryService
     {
         [OperationContract]
-        Task<IEnumerable<CategoryDto>> GetAllCategoryAsync();
+        Task<IEnumerable<Category>> GetAllCategoryAsync();
     }
 
     public class CategoryService : ICategoryService
     {
-        public async Task<IEnumerable<CategoryDto>> GetAllCategoryAsync()
+        public async Task<IEnumerable<Category>> GetAllCategoryAsync()
         {
             var categories = new List<Category>
             {
-                new Category(1, "warzywa"),
-                new Category(2, "owoce"),
-                new Category(3, "mięso"),
-                new Category(4, "ryby")
+                new Category(new Guid(), "warzywa"),
+                new Category(new Guid(), "owoce"),
+                new Category(new Guid(), "mięso"),
+                new Category(new Guid(), "ryby")
             };
 
-            var categoryDtos = categories.Select(x => new CategoryDto(x.Id, x.Name));
-
-            return categoryDtos;
+            return categories.Select(x => new Category(x.Id, x.Name));
         }
     }
 }

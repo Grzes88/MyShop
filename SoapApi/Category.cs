@@ -6,11 +6,11 @@ namespace SoapApi;
 public class Category
 {
     [DataMember]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     [DataMember]
     public string Name { get; set; }
 
-    public Category(int id, string name)
+    public Category(Guid id, string name)
     {
         Id = id;
         Name = name;

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MyShop.Core": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:65228;http://localhost:65230"
+    }
+  }
+}
