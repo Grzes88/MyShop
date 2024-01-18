@@ -33,7 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\SoapApi\SoapApi.csproj" />
 		<ProjectReference Include="..\MyShop.Application\MyShop.Application.csproj" />
 	</ItemGroup>
 
