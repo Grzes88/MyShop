@@ -17,13 +17,13 @@ public class CategoryServiceContract
         {
             var categories = new List<Category>
             {
-                new Category(1, "warzywa"),
-                new Category(2, "owoce"),
-                new Category(3, "mięso"),
-                new Category(4, "ryby")
+                new Category(Guid.NewGuid(), "warzywa"),
+                new Category(Guid.NewGuid(), "owoce"),
+                new Category(Guid.NewGuid(), "mięso"),
+                new Category(Guid.NewGuid(), "ryby")
             };
 
-            return categories.Select(x => new Category(x.Id, x.Name));
+            return categories;
         }
     }
 }

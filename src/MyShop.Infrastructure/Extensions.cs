@@ -17,7 +17,6 @@ public static class Extensions
         services.Configure<AppOptions>(configuration.GetRequiredSection("app"));
         services.AddSingleton<ExceptionMiddleware>();
         services.AddHttpContextAccessor();
-
         services
             .AddMSql(configuration);
 
